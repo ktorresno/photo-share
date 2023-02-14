@@ -1,0 +1,1 @@
+This is a Node.js photo sharing application leveraging Express and MariaDB.
