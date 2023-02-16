@@ -15,7 +15,7 @@ UsersRouter.route('/login')
         .then(async (user)=>{
             //response.send(user)
             if (user) {
-                bcrypt.compare(password, user.password, (error, same) => {
+                await bcrypt.compare(password, user.password, (error, same) => {
                     if (same) {
                         console.log("Logged in, user ID= ", user.id);
                         request.session.userId = user.id;
