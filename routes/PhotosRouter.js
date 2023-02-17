@@ -50,7 +50,11 @@ const fileStorageEngine = multer.diskStorage({
       response.send("Only photos are allowed, press go back to try again")
     }else{
     db.photo
-      .create({ title: title, mediaLocation: mediaLocation })
+      .create({ 
+        title: title, 
+        mediaLocation: mediaLocation,
+        userId: request.session.userId
+      })
       .then((photo) => {
         console.log("POST IMAGES");
         //response.send(photo);

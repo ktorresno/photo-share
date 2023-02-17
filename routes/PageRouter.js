@@ -1,10 +1,18 @@
 const PageRouter = require('express').Router();
+const { response } = require('express');
 const db = require('../models');
 //routes
 PageRouter.get('/', (req, res) => {
     console.log("cookie for userId:", req.session.userId);
     if (req.session.userId) {
-        res.render('index');
+        db.photo.findAll()
+        .then((photos) => {
+            console.log("GET IMAGES");
+            res.render("index", {data: photos});
+        })
+        .catch( (error) => {
+            res.send(error);
+        });
     } else {
         res.redirect('/login');
     }
@@ -27,6 +35,13 @@ PageRouter.get("/login", (request, response) => {
 PageRouter.get("/signUp", (request, response) => {
     console.log("/signUp");
     response.render("signUp");
+});
+
+PageRouter.get("/logout", (request, response) => {
+    console.log("logging out");
+    request.session.destroy(() => {
+        response.redirect("/login");
+    });
 });
 
 module.exports = PageRouter;
