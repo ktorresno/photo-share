@@ -2,13 +2,13 @@
   <%- include('partials/navbar'); %>
   <% console.log("Photo: "+photo[0].dataValues.mediaLocation +"Comments count:"+comment.length + '+++ URL=> '+requestURL) %>
 </body>
-    <div class="container fluid">
+    <div class="container">
         <div class="row">
             <div class="col col-4 mt-3">
                 <h1>
                 <%= photo[0].dataValues.title %>
                 </h1>
-                <img src="images/<%= photo[0].dataValues.mediaLocation %>" />
+                <img src="/images/<%= photo[0].dataValues.mediaLocation %>" />
             </div>
             <div class="col col-4 mt-3">
 
@@ -36,6 +36,8 @@
               Submit
             </button>
           </div>
+        </div>
+      </form>
     </div>
 
 

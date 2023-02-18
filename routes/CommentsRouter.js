@@ -1,26 +1,12 @@
-const CommentsRouter = require("express").Router();
+const express = require("express");
+const CommentsRouter = express.Router();
 const db = require("../models");
 
-CommentsRouter.route('/:photoID')
-.post((request, response)=>{
-    const userId = request.session.userId;
-    const photoId = request.params.photoID;
-    const content = request.body.comment;
-    db.comment.create({
-        userId: userId, 
-        photoId:photoId, 
-        content:content
-    }).then((comment)=>{
-      //response.send(comment)
-      response.redirect(`/comments${request.url}`);
-    }).catch((err )=> {
-        response.send(err)
-    });
-});
+CommentsRouter.use(express.static("public"));
 
-CommentsRouter.route('/:photoID')
+CommentsRouter.route('/:photoId')
 .get((request, response)=>{
-    const photoId = request.params.photoID;
+    const photoId = request.params.photoId;
     db.comment
     .findAll({ where: { photoId: photoId } })
     .then(comment => {
@@ -34,6 +20,24 @@ CommentsRouter.route('/:photoID')
     .catch(err => {
         response.send(err);
     });
-})
+});
+
+CommentsRouter.route('/:photoId')
+.post((request, response)=>{
+    const userId = request.session.userId;
+    const photoId = request.params.photoId;
+    const content = request.body.comment;
+    db.comment.create({
+        userId: userId, 
+        photoId:photoId, 
+        content:content
+    }).then((comment)=> {
+      response.redirect(`/comments${request.url}`);
+    }).catch((err )=> {
+        response.send(err)
+    });
+});
+
+
 
 module.exports = CommentsRouter;
