@@ -21,10 +21,13 @@ UsersRouter.route('/login')
                         request.session.userId = user.id;
                         response.redirect('/');
                     } else {
-                        response.redirect('/login');
+                        response.status(401)
+                        response.redirect('/badlogin');
                     }
                 });
-            }            
+            } else {
+                response.send("No such user");
+            }
         }).catch(err=>{
             response.send('You don\'t have an account. Try signing up!')
         });
