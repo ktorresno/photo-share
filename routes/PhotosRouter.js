@@ -38,14 +38,13 @@ const fileStorageEngine = multer.diskStorage({
       .catch((error) => {
         response.send(error);
       });
-  })
+  });
 
   PhotosRouter.route("/")
   .post(upload.single("photo"), (request, response) => {
     const title = request.body.title;
     const mediaLocation = request.file.filename;
     const ext = request.file.filename.split('.')[1];
-    console.log('********File extension:',ext);
     if (ext !== "png" && ext !== "jpg" && ext !== "gif" && ext !== "jpeg") {
       response.send("Only photos are allowed, press go back to try again")
     }else{

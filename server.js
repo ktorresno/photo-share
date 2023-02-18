@@ -1,10 +1,7 @@
 const express = require('express');
 const app = new express();
 const db = require('./models');
-
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.static('public'));
+const logger = require('morgan');
 
 const expressSession = require('express-session');
 app.use(expressSession({
@@ -16,6 +13,12 @@ app.use("*", (request, response, next) => { // Any route
   loggedIn = request.session.userId;
   next();
 });
+app.use(express.json());
+app.use(logger("dev"));
+app.use(express.urlencoded());
+app.use(express.static('public'));
+// Set the view Enging to ejs
+app.set('view engine', 'ejs');
 
 const PhotosRouter = require('./routes/PhotosRouter');
 const UsersRouter = require('./routes/UsersRouter');
@@ -25,9 +28,6 @@ app.use('/images', PhotosRouter);
 app.use('/comments', CommentsRouter);
 app.use('/users', UsersRouter);
 app.use('/', PageRouter);
-
-// Set the view Enging to ejs
-app.set('view engine', 'ejs');
 
 //db
 const sqlPort = 3307; // 3306 or 3307
