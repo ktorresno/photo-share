@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  photo_share:
+    container_name: photo_share
+    build: .
+    image: ktorresno/photo_share_app:vlinux
+    ports:
+      - '8080:8080'
+    environment:
+      - MDB_DB=${DB_NAME}
+      - MDB_USER=${DB_USR}
+      - MDB_PASSWORD=${DB_USR_PWD}
+      - MDB_HOST=photo_db
+    depends_on:
+      - photo_db
+
+  photo_db:
+    container_name: photo_db
+    image: mariadb:latest
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USR}
+      - MYSQL_PASSWORD=${DB_USR_PWD}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PWD}

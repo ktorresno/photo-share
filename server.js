@@ -5,7 +5,7 @@ const logger = require('morgan');
 
 const expressSession = require('express-session');
 app.use(expressSession({
-    secret: 'Drew Loves Kinsta'
+    secret: 'I Love Nodejs'
 }));
 // Any user logged in by default.
 global.loggedIn = null;
@@ -39,7 +39,7 @@ app.listen(sqlPort, () => {
 const port = 8080;
 db.sequelize
     .sync() // { force: true }
-    .then(() => {
+    .then( () => {
         app.listen(port, ()=>{
             console.log(`Serving photo app on http://localhost:${port}`)
         });

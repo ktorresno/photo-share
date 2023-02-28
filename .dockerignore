@@ -1,0 +1,9 @@
+node_modules
+README.txt
+LICENSE.txt
+test.http
+public/images/*.png
+public/images/*.jpg
+public/images/*.jpeg
+public/images/*.gif
+.DS_Store
